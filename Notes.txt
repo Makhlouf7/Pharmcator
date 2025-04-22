@@ -1,0 +1,40 @@
+# USER VIEW =====
+
+1- User not logged in show the signUp/login page
+=== User logged in ===
+case: admin, pharmacy => dashboard
+case: user => map page to search for a medicine
+=== User found a pharmacy and confirmed order ===
+show to user loading page until order is arrived
+=== Order arrived ===
+show to user the option to give a feedback and rate tha pharmacy
+
+====== Go to specific pharmacy ======
+send them your order
+
+# PHARMACY VIEW =====
+
+=== The account belongs to pharmacy ===
+open pharmacy dashboard
+Dashboard consists of: 
+- Allow pharmacy to edit its data
+- Allow pharmacy to CRUD medicine
+- Allow pharmacy to contact user
+- Statistics page (sales, customers, reviews, ratings)
+
+
+# ADMIN VIEW =====
+
+=== The account belongs to admin ===
+open admin dashboard
+Dashboard consists of: 
+- Able to see all pharmacies
+- Able to CRUD pharmacy
+- Able to search for a pharmacy
+- Able to look for pharmacy details
+- Statistics page (total sales of pharmacies, how many pharmacies or user currently with us, )
+
+
+Encrypted in database 💥💥 26e5aff0bd7423f27a7e7190e4ae30a59dd76ea692ab458661ea38f3ace22f5d
+
+Encrypted in resetPassword 💥💥 26e5aff0bd7423f27a7e7190e4ae30a59dd76ea692ab458661ea38f3ace22f5d
