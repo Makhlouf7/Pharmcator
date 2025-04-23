@@ -1,5 +1,5 @@
 const AppError = require("../utils/appError");
-// Handle duplicate to unique fields
+
 const handleDuplicateFieldsDB = (err) => {
   const duplicateFields = Object.keys(err.keyValue).map(
     (key) => err.keyValue[key]
@@ -7,7 +7,7 @@ const handleDuplicateFieldsDB = (err) => {
   const message = `Duplicate fields: ${duplicateFields.join(", ")}.`;
   return new AppError(message, 400);
 };
-// Handle validation
+
 const handleValidationErrorDB = (err) => {
   const message = Object.keys(err.errors)
     .map((key) => err.errors[key].message)
@@ -16,10 +16,7 @@ const handleValidationErrorDB = (err) => {
 };
 
 // Handle cast error
-// const handleCastErrorDB = (err) => {
-//   const message = `Invalid ${err.path}: ${err.value}`;
-//   return new AppError(message, 400);
-// };
+// ---
 
 const sendErrorDev = (err, res) => {
   res.status(err.statusCode).json({

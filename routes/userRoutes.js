@@ -15,7 +15,7 @@ router.post("/forgotPassword", forgotPassword);
 router.patch("/resetPassword/:token", resetPassword);
 
 router.use(protect);
-// Protected routes requires you to be authenticated
+// Protected routes requires authentication
 // router.route("/me").get(getMe).patch(updateMe).delete(deleteMe);
 
 // Routes only for admin

@@ -28,7 +28,6 @@ const signToken = (id) => {
 const createSendToken = (user, statusCode, res) => {
   const token = signToken(user._id);
   const JWT_EXPIRES_MS = process.env.JWT_EXPIRES * 24 * 60 * 60 * 1000;
-  // Initialize cookie and send it
   const cookieOptions = {
     expires: new Date(Date.now() + JWT_EXPIRES_MS),
     // Don't let any script in the browser modify the cookie
@@ -75,7 +74,6 @@ const login = catchAsync(async (req, res, next) => {
 
 // User forgot his password
 const forgotPassword = catchAsync(async (req, res, next) => {
-  // Check user passed email if it exist
   const { email } = req.body;
   if (!email) return next(new AppError("Please provide you email.", 400));
 
@@ -158,7 +156,6 @@ const protect = catchAsync(async (req, res, next) => {
   // User is authenticated
   req.user = currentUser;
   next();
-  // proceed if its correct
 });
 
 module.exports = { signUp, login, protect, forgotPassword, resetPassword };
