@@ -34,7 +34,5 @@ Dashboard consists of:
 - Able to look for pharmacy details
 - Statistics page (total sales of pharmacies, how many pharmacies or user currently with us, )
 
-
-Encrypted in database 💥💥 26e5aff0bd7423f27a7e7190e4ae30a59dd76ea692ab458661ea38f3ace22f5d
-
-Encrypted in resetPassword 💥💥 26e5aff0bd7423f27a7e7190e4ae30a59dd76ea692ab458661ea38f3ace22f5d
+# References =====
+https://www.pharmacymarts.com/

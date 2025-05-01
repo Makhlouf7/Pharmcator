@@ -1,0 +1,62 @@
+<nav class="navbar navbar-expand-lg bg-white shadow sticky-top">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <img src="../images/logo.jpg" alt="Pharmcator logo" />
+      <span>PHARMCATOR</span>
+    </a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#mainNavbar"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="mainNavbar">
+      <div class="d-flex align-items-center ms-auto">
+        <% if(!locals.user){ %>
+        <div class="text-center btn-nav">
+          <a
+            href="/sign"
+            class="text-decoration-none text-dark d-flex flex-column align-items-center"
+          >
+            <img
+              src="../svgs/account.svg"
+              alt="Login Icon"
+              width="24"
+              height="24"
+            />
+            <small class="mt-1">Login To Account</small>
+          </a>
+        </div>
+        <% }else{ %>
+        <button id="logout" class="text-center btn-nav">
+          <img src="../svgs/logout.svg" alt="logout" width="24" height="24" />
+          <small class="mt-1">Log out</small>
+        </button>
+        <a
+          href="/profile"
+          class="text-decoration-none text-dark btn-nav align-items-center"
+        >
+          <img
+            src="../svgs/account.svg"
+            alt="<%=user.fullName%>"
+            width="24"
+            height="24"
+          />
+          <small class="mt-1"
+            ><%= user.fullName.split(" ")[0].toUpperCase() %></small
+          >
+        </a>
+        <% } %>
+        <a
+          href="#"
+          class="text-decoration-none btn-nav text-dark align-items-center"
+        >
+          <img src="../svgs/cart.svg" alt="Cart Icon" width="24" height="24" />
+          <small class="mt-1">Cart</small>
+        </a>
+      </div>
+    </div>
+  </div>
+</nav>

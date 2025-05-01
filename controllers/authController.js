@@ -46,6 +46,23 @@ const createSendToken = (user, statusCode, res) => {
   });
 };
 
+const checkUserToken = async (token) => {
+  try {
+    const encryptedToken = crypto
+      .createHash("sha256")
+      .update(token)
+      .digest("hex");
+    const user = await User.findOne({
+      passwordResetToken: encryptedToken,
+      passwordResetExpires: { $gt: Date.now() },
+    });
+
+    return user;
+  } catch (err) {
+    return null;
+  }
+};
+
 // Sign Up
 const signUp = catchAsync(async (req, res, next) => {
   const { fullName, email, password, passwordConfirm } = req.body;
@@ -66,8 +83,8 @@ const login = catchAsync(async (req, res, next) => {
     return next(new AppError("Provide your email and password", 400));
 
   const user = await User.findOne({ email }).select("+password");
-  if (!(await user.isCorrectPassword(password, user.password)))
-    return next(new AppError("Invalid email or password", 404));
+  if (!user || !(await user.isCorrectPassword(password, user.password)))
+    return next(new AppError("Invalid email or password", 401));
 
   createSendToken(user, 200, res);
 });
@@ -112,19 +129,24 @@ const forgotPassword = catchAsync(async (req, res, next) => {
   }
 });
 
-const resetPassword = catchAsync(async (req, res, next) => {
+const renderResetForm = async (req, res, next) => {
   const { token } = req.params;
-  const encryptedToken = crypto
-    .createHash("sha256")
-    .update(token)
-    .digest("hex");
-  const user = await User.findOne({
-    passwordResetToken: encryptedToken,
-    // passwordResetExpires: { $gt: Date.now() },
-  });
+  const user = await checkUserToken(token);
 
   if (!user)
-    return next(new AppError("Session is expired try again later", 400));
+    return res.status(200).render("error", {
+      message: "",
+    });
+
+  res.status(200).render("resetForm");
+};
+
+const resetPassword = catchAsync(async (req, res, next) => {
+  const { token } = req.params;
+  const user = await checkUserToken(token);
+
+  if (!user)
+    return next(new AppError("Session is expired try again later", 401));
 
   user.passwordResetExpires = undefined;
   user.passwordResetToken = undefined;
@@ -137,6 +159,17 @@ const resetPassword = catchAsync(async (req, res, next) => {
   });
 });
 
+const restrictTo = (...roles) => {
+  return (req, res, next) => {
+    if (!roles.includes(req.user.role))
+      return next(
+        new AppError("You don't have permission to perform this action", 403)
+      );
+
+    next();
+  };
+};
+
 const protect = catchAsync(async (req, res, next) => {
   const { authorization } = req.headers;
   if (!authorization || !authorization.startsWith("Bearer"))
@@ -146,7 +179,7 @@ const protect = catchAsync(async (req, res, next) => {
   // Check token if its valid
   const decoded = jwt.verify(token, process.env.JWT_SECRET);
   // Check if user still exist
-  const currentUser = User.findById(decoded.id);
+  const currentUser = await User.findById(decoded.id);
   if (!currentUser) return next(new AppError("User is no longer exist.", 404));
   // Check if user changed password after token was issued
   if (currentUser.methods.changedPasswordAfter(decoded.iat)) {
@@ -158,4 +191,58 @@ const protect = catchAsync(async (req, res, next) => {
   next();
 });
 
-module.exports = { signUp, login, protect, forgotPassword, resetPassword };
+// For Browser Client
+
+const isUserLoggedIn = async (req, res, next) => {
+  if (!req.cookies.jwt) return next();
+
+  try {
+    const token = req.cookies.jwt;
+    console.log("token", token);
+    // Check token if its valid
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    // Check if user still exist
+    const currentUser = await User.findById(decoded.id);
+    if (!currentUser) return next();
+    // Check if user changed password after token was issued
+    if (currentUser.changedPasswordAfter(decoded.iat)) {
+      return next();
+    }
+    console.log("Entered User logged in 💥💥💥");
+
+    // Using it for ejs templates
+    res.locals.user = currentUser;
+    next();
+  } catch (err) {
+    console.log(err);
+    next();
+  }
+};
+
+const logoutUserCookie = async (req, res, next) => {
+  console.log("Entered user logged out");
+  try {
+    res.cookie("jwt", "logoutUserCookie", {
+      expires: new Date(Date.now() - 1000),
+      httpOnly: true,
+    });
+    res.status(200).json({
+      status: "success",
+      message: "Logged out successfully",
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+module.exports = {
+  signUp,
+  login,
+  protect,
+  restrictTo,
+  forgotPassword,
+  resetPassword,
+  renderResetForm,
+  isUserLoggedIn,
+  logoutUserCookie,
+};

@@ -53,7 +53,6 @@ const userSchema = new mongoose.Schema({
   },
   phone: {
     type: String,
-    required: [true, "Please provide your phone number"],
   },
   role: {
     type: String,
@@ -92,7 +91,7 @@ userSchema.methods.isCorrectPassword = async (
   return await bcrypt.compare(candidatePassword, currentPassword);
 };
 
-userSchema.methods.changedPasswordAfter = (JWTTimestamp) => {
+userSchema.methods.changedPasswordAfter = function (JWTTimestamp) {
   const passwordChangedAtSec = Number.parseInt(
     this.passwordChangedAt.getTime() / 1000,
     10

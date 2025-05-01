@@ -6,13 +6,16 @@ const {
   protect,
   forgotPassword,
   resetPassword,
+  logoutUserCookie,
+  renderResetForm,
 } = require("../controllers/authController");
 const { createUser } = require("../controllers/userController");
-// Routes won't be protected signUp, login, forgotPassword, resetPassword
+// Routes won't be protected signUp, login, logout, forgotPassword, resetPassword
 router.post("/signUp", signUp);
 router.post("/login", login);
+router.post("/logout", logoutUserCookie);
 router.post("/forgotPassword", forgotPassword);
-router.patch("/resetPassword/:token", resetPassword);
+router.route("/resetPassword/:token").get(renderResetForm).patch(resetPassword);
 
 router.use(protect);
 // Protected routes requires authentication

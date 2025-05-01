@@ -1,0 +1,103 @@
+<!-- nav.html -->
+<div class="sidebar">
+  <h4 class="mb-4 text-center">PHARMCATOR</h4>
+
+  <ul class="nav flex-column">
+    <!-- Dashboard -->
+    <li class="nav-item">
+      <a href="/dashboard" class="nav-link">
+        <span class="icon">&#x1F4CA;</span>
+        Dashboard
+      </a>
+    </li>
+
+    <!-- Inventory -->
+    <li class="nav-item">
+      <a
+        class="nav-link d-flex justify-content-between align-items-center"
+        data-bs-toggle="collapse"
+        href="#inventoryCollapse"
+        role="button"
+        aria-expanded="false"
+      >
+        <span><span class="icon">&#x1F4E6;</span> Inventory</span>
+        <svg class="toggle-icon" width="16" height="16" viewBox="0 0 16 16">
+          <path fill="currentColor" d="M6 12l4-4-4-4z" />
+        </svg>
+      </a>
+      <div class="collapse ps-3 py-2" id="inventoryCollapse">
+        <a href="/dashboard/inventory/products" class="nav-link"
+          >Pharmacy Products</a
+        >
+        <a href="/dashboard/inventory/categories" class="nav-link"
+          >Medicine Groups</a
+        >
+      </div>
+    </li>
+
+    <!-- Reports -->
+    <li class="nav-item">
+      <a
+        class="nav-link d-flex justify-content-between align-items-center"
+        data-bs-toggle="collapse"
+        href="#reportsCollapse"
+        aria-expanded="false"
+      >
+        <span><span class="icon">&#x1F4C8;</span> Reports</span>
+        <svg class="toggle-icon" width="16" height="16" viewBox="0 0 16 16">
+          <path fill="currentColor" d="M6 12l4-4-4-4z" />
+        </svg>
+      </a>
+      <div class="collapse ps-3 py-2" id="reportsCollapse">
+        <a href="#" class="nav-link">Sales Report</a>
+        <a href="#" class="nav-link">Stock Report</a>
+      </div>
+    </li>
+
+    <!-- Contact Management -->
+    <li class="nav-item">
+      <a
+        class="nav-link d-flex justify-content-between align-items-center"
+        data-bs-toggle="collapse"
+        href="#contactCollapse"
+        aria-expanded="false"
+      >
+        <span><span class="icon">&#x1F464;</span> Contact Management</span>
+        <svg class="toggle-icon" width="16" height="16" viewBox="0 0 16 16">
+          <path fill="currentColor" d="M6 12l4-4-4-4z" />
+        </svg>
+      </a>
+      <div class="collapse ps-3 py-2" id="contactCollapse">
+        <a href="#" class="nav-link">Customers</a>
+        <a href="#" class="nav-link">Suppliers</a>
+      </div>
+    </li>
+
+    <!-- Static -->
+    <li class="nav-item">
+      <a href="#" class="nav-link">
+        <span class="icon">&#x1F514;</span>
+        Notifications
+        <span class="badge">1</span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a href="#" class="nav-link">
+        <span class="icon">&#x1F4AC;</span>
+        Chat with Visitors
+      </a>
+    </li>
+    <li class="nav-item">
+      <a href="#" class="nav-link">
+        <span class="icon">&#9881;</span>
+        Application Settings
+      </a>
+    </li>
+    <li class="nav-item">
+      <a href="#" class="nav-link">
+        <span class="icon">&#x1F9A0;</span>
+        Covid-19
+      </a>
+    </li>
+  </ul>
+</div>

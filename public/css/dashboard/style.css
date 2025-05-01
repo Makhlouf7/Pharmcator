@@ -1,0 +1,141 @@
+:root {
+  /* Theme Greens */
+  --green-darkest: #14532d;
+  --green-darker: #166534;
+  --green-bright: #15803d;
+  --green-light: #d1fad1;
+  --green-lighter: #e7fbe7;
+  --green-hover: #f0fdf4;
+
+  /* Text */
+  --text-light: #e7fbe7;
+  --text-bright: #fff;
+
+  /* Accent */
+  --danger: #dc2626;
+
+  /* Shadows */
+  --shadow-default: 0px 0px 15px 2px grey;
+
+  /* Focus Ring */
+  --focus-ring: 0px 0px 5px var(--green-darkest);
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+}
+body {
+  display: flex;
+}
+
+main {
+  height: 100vh;
+  width: 100%;
+  padding: 45px 35px;
+  overflow-y: auto;
+}
+
+.form-select:focus,
+.form-control:focus {
+  box-shadow: var(--focus-ring);
+  outline: var(--green-darkest);
+  border: var(--green-darkest);
+}
+
+/* Sidebar CSS */
+.sidebar {
+  min-width: 250px;
+  padding: 1rem;
+  height: 100vh;
+  background-color: var(--green-darkest);
+  color: var(--text-light);
+  overflow-y: auto;
+}
+
+.sidebar h4 {
+  color: var(--green-light);
+}
+
+.nav-link {
+  color: var(--text-light);
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  font-size: 0.95rem;
+}
+
+.nav-link:hover {
+  background-color: var(--green-darker);
+  color: var(--text-bright);
+}
+
+.nav-link:focus {
+  color: var(--text-bright);
+}
+
+.nav-link.active,
+.nav-link[aria-expanded="true"] {
+  background-color: var(--green-bright);
+  color: var(--text-bright);
+}
+
+.icon {
+  margin-right: 0.5rem;
+  font-size: 1.2rem;
+}
+
+.badge {
+  background: var(--danger);
+  color: var(--text-bright);
+  font-size: 0.75rem;
+  margin-left: auto;
+  padding: 0.2rem 0.5rem;
+  border-radius: 999px;
+}
+
+.toggle-icon {
+  transition: transform 0.3s ease;
+  fill: var(--text-light);
+}
+
+.nav-link[aria-expanded="true"] .toggle-icon {
+  transform: rotate(90deg);
+}
+
+.collapse .nav-link {
+  padding-left: 2rem;
+  font-size: 0.9rem;
+}
+
+/* Table Style */
+.table-responsive {
+  box-shadow: var(--shadow-default);
+}
+
+.table thead th {
+  vertical-align: middle;
+  font-weight: 600;
+}
+
+.table tbody tr:hover {
+  background-color: var(--green-hover);
+}
+
+.table td,
+.table th {
+  vertical-align: middle;
+}
+
+.text-warning:hover,
+.text-danger:hover {
+  opacity: 0.8;
+}

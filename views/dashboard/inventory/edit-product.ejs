@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en" data-page="form">
+  <head>
+    <meta charset="UTF-8" />
+    <title>PHARMCATOR | Categories</title>
+    <link rel="shortcut icon" href="/images/favicon.png" type="image/png" />
+    <link rel="stylesheet" href="/index.css" />
+    <link rel="stylesheet" href="/css/dashboard/style.css" />
+  </head>
+  <body>
+    <%- include("../partials/nav.ejs") %>
+    <!-- Main Content -->
+    <main>
+      <div class="container py-4">
+        <div class="card shadow-sm border-0">
+          <div class="card-header bg-success text-white">
+            <h4 class="mb-0">Edit product</h4>
+          </div>
+          <div class="card-body">
+            <form
+              data-endpoint="api/v1/product/<%= product._id %>"
+              data-method="PATCH"
+              enctype="multipart/form-data"
+            >
+              <!-- Existing Image Preview -->
+              <div class="mb-3">
+                <label class="form-label">Current Image</label><br />
+                <img
+                  src="<%= product.image %>"
+                  alt="Current product Image"
+                  class="img-thumbnail"
+                  style="max-height: 150px"
+                />
+              </div>
+
+              <!-- New Image Upload -->
+              <div class="mb-3">
+                <label for="productImage" class="form-label"
+                  >Change Image</label
+                >
+                <input
+                  type="file"
+                  class="form-control"
+                  id="productImage"
+                  name="image"
+                  accept="image/*"
+                />
+              </div>
+
+              <!-- Select Category -->
+              <div class="mb-3">
+                <label for="category" class="form-label">Select Category</label>
+                <select id="category" class="form-select" name="category">
+                  <option value="<%= product.category %>" hidden>Select</option>
+                  <% for(const category of categories){ %>
+                  <option value="<%= category._id %>">
+                    <%=category.name%>
+                  </option>
+                  <% } %>
+                </select>
+              </div>
+
+              <!-- product Name -->
+              <div class="mb-3">
+                <label for="name" class="form-label">Product Name</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="name"
+                  name="name"
+                  value="<%= product.name %>"
+                />
+              </div>
+
+              <!-- Description -->
+              <div class="mb-3">
+                <label for="description" class="form-label">Description</label>
+                <!-- prettier-ignore -->
+                <textarea
+                  class="form-control"
+                  id="description"
+                  name="description"
+                  rows="3"
+                ><%= product.description %></textarea
+                >
+              </div>
+
+              <!-- Stock -->
+              <div class="mb-3">
+                <label for="stock" class="form-label">Stock</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  id="stock"
+                  name="stock"
+                  value="<%= product.stock %>"
+                />
+              </div>
+
+              <!-- Button Text -->
+              <div class="mb-3">
+                <label for="btnText" class="form-label">Button Text</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="btnText"
+                  name="btnText"
+                  value="<%=product.btnText%>"
+                />
+              </div>
+
+              <!-- Submit -->
+              <button type="submit" class="btn btn-success">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  fill="currentColor"
+                  class="bi bi-pencil-square me-1"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    d="M15.502 1.94a.5.5 0 0 1 0 .706l-1 1a.5.5 0 0 1-.707 0l-1-1a.5.5 0 0 1 0-.707l1-1a.5.5 0 0 1 .707 0l1 1z"
+                  />
+                  <path
+                    d="M13.5 3.207L6 10.707V13.5h2.793l7.5-7.5-2.793-2.793zM1 13.5a.5.5 0 0 0 .5.5h11a.5.5 0 0 0 0-1H2v-11a.5.5 0 0 0-1 0v11z"
+                  />
+                </svg>
+                Save Changes
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </main>
+    <script src="/index.js"></script>
+  </body>
+</html>
