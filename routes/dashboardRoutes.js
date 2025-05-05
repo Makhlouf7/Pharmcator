@@ -11,10 +11,8 @@ const {
 const { protect, restrictTo } = require("../controllers/authController");
 const router = express.Router();
 
-// Protect all routes in this router
-// router.use(protect);
-
-// Restrict access to admin users
+// Protect all routes in this router. Restrict access to admin users
+router.use(protect, restrictTo("admin"));
 router.get("/", getDashboard);
 router.get("/inventory/categories", getCategories);
 router.get("/inventory/categories/add", getCategoriesAdd);

@@ -137,7 +137,7 @@ var formEl = document.querySelector("form");
 formEl.addEventListener("submit", /*#__PURE__*/function () {
   var _ref = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee(e) {
     var _console;
-    var formData, res;
+    var formData, res, params;
     return _regeneratorRuntime().wrap(function _callee$(_context) {
       while (1) switch (_context.prev = _context.next) {
         case 0:
@@ -146,7 +146,8 @@ formEl.addEventListener("submit", /*#__PURE__*/function () {
           formData = new FormData(formEl);
           (_console = console).log.apply(_console, _toConsumableArray(formData));
           if (formEl.enctype != "multipart/form-data") {
-            formData = (0, _formUtils.getFormData)(formData);
+            formData = (0, _formUtils.getFormData)(formEl);
+            console.log(formData);
           }
           (0, _alerts.toggleLoader)("show");
           _context.next = 8;
@@ -154,14 +155,29 @@ formEl.addEventListener("submit", /*#__PURE__*/function () {
         case 8:
           res = _context.sent;
           console.log(res.data);
-          res.data.status == "success" ? (0, _alerts.showAlert)("Saved successfully", "success") : (0, _alerts.showAlert)("Oops something wrong happen!", "error");
+          if (!(res.data.status == "success")) {
+            _context.next = 15;
+            break;
+          }
           _context.next = 13;
-          return new Promise(function (resolve) {
-            return setTimeout(resolve, 1000);
-          });
+          return (0, _alerts.showAlert)(res.data.message || "Success", "success");
         case 13:
-          location.reload();
-        case 14:
+          _context.next = 17;
+          break;
+        case 15:
+          _context.next = 17;
+          return (0, _alerts.showAlert)("Oops something wrong happen!", "error");
+        case 17:
+          _context.next = 19;
+          return new Promise(function (resolve) {
+            return setTimeout(resolve, 0);
+          });
+        case 19:
+          (0, _alerts.toggleLoader)("hide");
+          params = new URLSearchParams(window.location.search);
+          window.location = params.get("redirect") || location.pathname;
+          // location.reload();
+        case 22:
         case "end":
           return _context.stop();
       }

@@ -11,12 +11,23 @@ const getAll = (Model) =>
     });
   });
 
+const getOneById = (Model) =>
+  catchAsync(async (req, res, next) => {
+    const { id } = req.params;
+    const doc = await Model.findById(id);
+    res.status(200).json({
+      status: "success",
+      data: doc,
+    });
+  });
+
 const createOne = (Model) =>
   catchAsync(async (req, res, next) => {
     const doc = await Model.create(req.body);
 
     res.status(201).json({
       status: "success",
+      message: "Created Successfully",
       data: doc,
     });
   });
@@ -31,6 +42,7 @@ const updateOne = (Model) =>
 
     res.status(200).json({
       status: "success",
+      message: "Created Successfully",
       data: doc,
     });
   });
@@ -50,4 +62,4 @@ const deleteOne = (Model) =>
     });
   });
 
-module.exports = { createOne, deleteOne, getAll, updateOne };
+module.exports = { createOne, deleteOne, getAll, updateOne, getOneById };

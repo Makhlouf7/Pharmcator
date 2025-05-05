@@ -1,0 +1,143 @@
+/* General Style */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+a {
+  text-decoration: none;
+  color: #000;
+}
+ul {
+  list-style: none;
+}
+
+/* Applied for any title of a section */
+.section-title {
+  direction: rtl;
+  color: #006a4e;
+  border-bottom: 1px solid rgb(178, 178, 178);
+  padding-bottom: 15px;
+  margin-bottom: 15px;
+  text-align: center;
+}
+.section-p {
+  margin-bottom: 20px;
+}
+
+.hero-section {
+  height: calc(100vh - 75px);
+}
+
+.hero-container {
+  position: relative;
+}
+.hero-image,
+.hero-container {
+  width: 100%;
+  height: 100%;
+}
+
+/* Products Style */
+
+.products {
+  background-color: #ffffff;
+  position: relative;
+  margin-bottom: 0;
+  padding: 30px 60px;
+}
+
+/* Products-container Style */
+.products-container {
+  margin: 50px 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 25px;
+  justify-content: center;
+}
+.product-item {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 376px;
+  min-width: 200px;
+  position: relative;
+  justify-content: space-between;
+  box-shadow: 0 0 30px #00000029;
+  padding: 30px;
+  text-align: center;
+  &:hover .product-content {
+    display: flex;
+  }
+}
+.product-image-container {
+  height: 376px;
+}
+.product-content-p {
+  overflow-y: auto;
+  height: 190px;
+}
+.product-image {
+  margin-bottom: 30px;
+  width: 100%;
+  height: 100%;
+}
+.product-title {
+  font: bold 18px arial;
+  color: var(--primary-color);
+}
+.product-content-title {
+  font-weight: bold;
+  margin-bottom: 25px;
+}
+.product-content {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: var(--primary-color);
+  color: var(--white);
+  padding: 70px 50px;
+  font-size: 18px;
+}
+.product-details-btn {
+  padding: 15px 50px;
+  background-color: #ffffff;
+  border-radius: 5px;
+  color: var(--primary-color);
+  cursor: pointer;
+}
+
+/* Media Queries */
+@media (max-width: 576px) {
+  .products {
+    padding: 30px 10px;
+  }
+}
+@media (max-width: 360px) {
+  .product-content {
+    padding: 35px;
+  }
+  .product-content-title {
+    font-weight: normal;
+    margin-bottom: 15px;
+  }
+  .product-image-container {
+    height: auto;
+    min-height: 300px;
+  }
+  .product-details-btn {
+    font-size: medium;
+  }
+  .product-content-p {
+    overflow-y: auto;
+    height: 190px;
+    font-size: 16px;
+  }
+}

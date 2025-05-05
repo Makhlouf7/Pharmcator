@@ -1,7 +1,26 @@
 const Category = require("../models/categoriesModel");
 const Product = require("../models/productsModel");
 const getDashboard = async (req, res) => {
-  res.status(200).render("./dashboard/index");
+  const productsCount = await Product.countDocuments();
+  const categoriesCount = await Category.countDocuments();
+  const productsShortageCount = (await Product.find({ stock: { $lt: 10 } }))
+    .length;
+  const productsAvgRating = await Product.aggregate([
+    {
+      $group: {
+        _id: null,
+        averageRating: { $avg: "$ratingsAvg" },
+      },
+    },
+  ]);
+  const averageRating =
+    productsAvgRating.length > 0 ? productsAvgRating[0].averageRating : 0;
+  res.status(200).render("./dashboard/index", {
+    productsCount,
+    categoriesCount,
+    productsShortageCount,
+    averageRating,
+  });
 };
 
 const getCategories = async (req, res) => {
@@ -24,7 +43,9 @@ const getCategoriesEdit = async (req, res) => {
 
 const getProducts = async (req, res) => {
   const categories = await Category.find();
-  const products = await Product.find({ category: categories[0]._id });
+  console.log("Categories", categories);
+  const products = await Product.find({ category: categories[0]?._id });
+  console.log("Products", products);
   res.status(200).render("./dashboard/inventory/products", {
     categories,
     products,

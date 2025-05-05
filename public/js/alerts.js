@@ -1,7 +1,7 @@
 const body = document.querySelector("body");
 
 // Function to create and display an alert
-export const showAlert = (message, type, time = 2000) => {
+export const showAlert = async (message, type, time = 2000) => {
   const alert = document.createElement("div");
   alert.textContent = message;
   alert.style.cssText = `
@@ -20,9 +20,12 @@ export const showAlert = (message, type, time = 2000) => {
   `;
   body.appendChild(alert);
 
-  setTimeout(() => {
-    alert.remove();
-  }, time);
+  await new Promise((resolve) =>
+    setTimeout(() => {
+      alert.remove();
+      resolve();
+    }, time)
+  );
 };
 
 // Function to show or hide a loader

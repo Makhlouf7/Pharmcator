@@ -1,5 +1,6 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap";
+import "./shared.js";
 
 const page = document.querySelector("html").dataset.page;
 console.log(page);
@@ -14,8 +15,17 @@ console.log(page);
     case "login":
       await import("./login.js");
       break;
+    case "cart":
+      await import("./cart.js");
+      break;
     case "form":
       await import("./collectFormSendRequest.js");
+      break;
+    case "productDetails":
+      await import("./productDetails.js");
+      break;
+    case "dashboard/index":
+      await import("./dashboard/index.js");
       break;
     case "dashboard/categories":
       await import("./dashboard/categories.js");

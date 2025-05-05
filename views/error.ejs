@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PHARMCATOR | Error</title>
+    <style>
+      body {
+        font-family: "Roboto", sans-serif;
+        background: linear-gradient(135deg, #ff7e5f, #feb47b);
+        color: #fff;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+      .error-container {
+        text-align: center;
+        background: rgba(0, 0, 0, 0.6);
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+      }
+      .error-container h1 {
+        font-size: 3rem;
+        margin-bottom: 15px;
+        color: #ffcccb;
+      }
+      .error-container p {
+        font-size: 1.5rem;
+        margin-bottom: 20px;
+      }
+      .error-container a {
+        display: inline-block;
+        padding: 12px 25px;
+        font-size: 1rem;
+        color: #fff;
+        background: #ff6f61;
+        text-decoration: none;
+        border-radius: 8px;
+        transition: background 0.3s ease;
+      }
+      .error-container a:hover {
+        background: #e55d50;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="error-container">
+      <h1><%= title %></h1>
+      <p><%= message %></p>
+      <a href="/">Go Back to Home</a>
+    </div>
+  </body>
+</html>

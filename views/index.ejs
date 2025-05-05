@@ -3,13 +3,13 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>PHARMCATOR</title>
+    <title>PHARMCATOR | Overview</title>
 
     <!-- Style -->
-    <link rel="stylesheet" href="../dist/index.css" />
-    <link rel="icon shortcut" href="../images/favicon.png" type="image/png" />
-    <link rel="stylesheet" href="../css/shared.css" />
-    <link rel="stylesheet" href="../css/styles.css" />
+    <link rel="stylesheet" href="/index.css" />
+    <link rel="icon shortcut" href="/images/favicon.png" type="image/png" />
+    <link rel="stylesheet" href="/css/shared.css" />
+    <link rel="stylesheet" href="/css/styles.css" />
   </head>
   <body>
     <%- include('_header') %>
@@ -99,88 +99,29 @@
     </div>
 
     <div class="swiper container section">
-      <p class="fs-2 my-5 primary-color text-center">Our latest products</p>
+      <p class="fs-2 fw-bold my-5 primary-color text-center">
+        Our latest products
+      </p>
       <div class="swiper-wrapper">
+        <% for(const category of categories){ %>
         <div class="swiper-slide">
           <div class="category-overlay">
-            <p class="category-description">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa
-              sequi nihil neque, ullam molestias eius rerum a corporis deleniti
-              architecto nulla officia reprehenderit fuga cumque, necessitatibus
-              fugit laudantium temporibus natus?
-            </p>
-            <a class="category-link" href="#">View</a>
+            <p class="category-description"><%= category.description %></p>
+            <a class="category-link" href="/category/<%= category._id %>"
+              ><%= category.btnText %></a
+            >
           </div>
           <div class="category-image">
-            <img class="w-100" src="../images/men-care.webp" alt="" />
-            <p class="category-title">Men Care</p>
+            <img class="w-100" src="<%= category.image %>" alt="" />
+            <p class="category-title"><%=category.name %></p>
           </div>
         </div>
-        <div class="swiper-slide">
-          <div class="category-overlay">
-            <p class="category-description">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa
-              sequi nihil neque, ullam molestias eius rerum a corporis deleniti
-              architecto nulla officia reprehenderit fuga cumque, necessitatibus
-              fugit laudantium temporibus natus?
-            </p>
-            <a class="category-link" href="#">View</a>
-          </div>
-          <div class="category-image">
-            <img class="w-100" src="../images/men-care.webp" alt="" />
-            <p class="category-title">Men Care</p>
-          </div>
-        </div>
-        <div class="swiper-slide">
-          <div class="category-overlay">
-            <p class="category-description">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa
-              sequi nihil neque, ullam molestias eius rerum a corporis deleniti
-              architecto nulla officia reprehenderit fuga cumque, necessitatibus
-              fugit laudantium temporibus natus?
-            </p>
-            <a class="category-link" href="#">View</a>
-          </div>
-          <div class="category-image">
-            <img class="w-100" src="../images/men-care.webp" alt="" />
-            <p class="category-title">Men Care</p>
-          </div>
-        </div>
-        <div class="swiper-slide">
-          <div class="category-overlay">
-            <p class="category-description">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa
-              sequi nihil neque, ullam molestias eius rerum a corporis deleniti
-              architecto nulla officia reprehenderit fuga cumque, necessitatibus
-              fugit laudantium temporibus natus?
-            </p>
-            <a class="category-link" href="#">View</a>
-          </div>
-          <div class="category-image">
-            <img class="w-100" src="../images/men-care.webp" alt="" />
-            <p class="category-title">Hello world</p>
-          </div>
-        </div>
-        <div class="swiper-slide">
-          <div class="category-overlay">
-            <p class="category-description">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa
-              sequi nihil neque, ullam molestias eius rerum a corporis deleniti
-              architecto nulla officia reprehenderit fuga cumque, necessitatibus
-              fugit laudantium temporibus natus?
-            </p>
-            <a class="category-link" href="#">View</a>
-          </div>
-          <div class="category-image">
-            <img class="w-100" src="../images/men-care.webp" alt="" />
-            <p class="category-title">Hello world</p>
-          </div>
-        </div>
+        <% } %>
       </div>
     </div>
 
     <div id="map" class="container-fluid"></div>
-    <%- include("_footer.ejs") %>
-    <script src="../dist/index.js"></script>
+    <%- include("_footer") %>
+    <script src="/index.js"></script>
   </body>
 </html>

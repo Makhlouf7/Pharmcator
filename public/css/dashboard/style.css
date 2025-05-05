@@ -139,3 +139,55 @@ main {
 .text-danger:hover {
   opacity: 0.8;
 }
+
+/* Dashboard Styles */
+.details-btn {
+  cursor: pointer;
+}
+.stat-card {
+  padding-top: 20px;
+  width: 300px;
+  height: 200px;
+  border-radius: 5px;
+}
+.border-green {
+  border: 2px solid #a5d9c9;
+}
+.border-blue {
+  border: 2px solid #a4ddf1;
+}
+.border-red {
+  border: 2px solid #d22d2a;
+}
+.border-yellow {
+  border: 2px solid #f0e39d;
+}
+
+.details-green {
+  background-color: #a5d9c9;
+  color: #fff;
+  &:hover {
+    background-color: #81e9ca;
+  }
+}
+.details-blue {
+  background-color: #a4ddf1;
+  color: #fff;
+  &:hover {
+    background-color: #80d9fa;
+  }
+}
+.details-red {
+  background-color: #d22d2a;
+  color: #fff;
+  &:hover {
+    background-color: #ca0e0b;
+  }
+}
+.details-yellow {
+  background-color: #f0e39d;
+  color: #fff;
+  &:hover {
+    background-color: #efd751;
+  }
+}

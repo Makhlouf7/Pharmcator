@@ -37,13 +37,19 @@ L.marker(coords, {
 
 // Slider
 const swiper = new Swiper(".swiper", {
+  loop: true,
   slidesPerView: 1,
   spaceBetween: 10,
+  centeredSlides: true, // Added to center the slides
   breakpoints: {
     768: {
       slidesPerView: 3,
       spaceBetween: 20,
     },
+  },
+  autoplay: {
+    delay: 1000,
+    disableOnInteraction: false,
   },
 });
 

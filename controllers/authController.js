@@ -107,7 +107,9 @@ const forgotPassword = catchAsync(async (req, res, next) => {
   const resetToken = user.createPasswordResetToken();
   await user.save({ validateBeforeSave: false });
 
-  const URL = `${process.env.SERVER_URL}/users/resetPassword/${resetToken}`;
+  const URL = `${req.protocol}://${req.get(
+    "host"
+  )}/resetPassword/${resetToken}?redirect=/sign`;
   try {
     await sendEmail({
       html: resetEmailHTML(URL),
@@ -117,7 +119,7 @@ const forgotPassword = catchAsync(async (req, res, next) => {
 
     res.status(200).json({
       status: "success",
-      message: "Email sent successfully",
+      message: "Reset link sent to your email successfully",
     });
   } catch (err) {
     user.passwordResetToken = undefined;
@@ -172,17 +174,20 @@ const restrictTo = (...roles) => {
 
 const protect = catchAsync(async (req, res, next) => {
   const { authorization } = req.headers;
-  if (!authorization || !authorization.startsWith("Bearer"))
+  if (
+    (!authorization || !authorization.startsWith("Bearer")) &&
+    !req.cookies.jwt
+  )
     return next(new AppError("You are not authenticated please login"));
 
-  const token = authorization.split(" ")[1];
+  const token = authorization?.split(" ")[1] || req.cookies.jwt;
   // Check token if its valid
   const decoded = jwt.verify(token, process.env.JWT_SECRET);
   // Check if user still exist
   const currentUser = await User.findById(decoded.id);
   if (!currentUser) return next(new AppError("User is no longer exist.", 404));
   // Check if user changed password after token was issued
-  if (currentUser.methods.changedPasswordAfter(decoded.iat)) {
+  if (currentUser.changedPasswordAfter(decoded.iat)) {
     return next(new AppError("Session expired. Please login again."));
   }
 
@@ -198,7 +203,6 @@ const isUserLoggedIn = async (req, res, next) => {
 
   try {
     const token = req.cookies.jwt;
-    console.log("token", token);
     // Check token if its valid
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     // Check if user still exist
@@ -212,6 +216,7 @@ const isUserLoggedIn = async (req, res, next) => {
 
     // Using it for ejs templates
     res.locals.user = currentUser;
+    req.user = currentUser;
     next();
   } catch (err) {
     console.log(err);

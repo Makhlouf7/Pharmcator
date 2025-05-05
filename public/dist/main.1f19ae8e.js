@@ -20276,13 +20276,20 @@ _leaflet2.default.marker(coords, {
 
 // Slider
 var swiper = new _swiper.default(".swiper", {
+  loop: true,
   slidesPerView: 1,
   spaceBetween: 10,
+  centeredSlides: true,
+  // Added to center the slides
   breakpoints: {
     768: {
       slidesPerView: 3,
       spaceBetween: 20
     }
+  },
+  autoplay: {
+    delay: 1000,
+    disableOnInteraction: false
   }
 });
 

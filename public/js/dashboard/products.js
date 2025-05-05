@@ -4,19 +4,21 @@ const allDeleteBtns = document.querySelectorAll(".delete-doc");
 const selectCategory = document.querySelector("#select-category");
 const tableBody = document.querySelector("tbody");
 
+const handleDeleteClick = async function () {
+  const endpoint = this.dataset.endpoint;
+  if (await showConfirmDialog("You are about to delete this product")) {
+    toggleLoader("show");
+    await apiRequest("DELETE", endpoint);
+    showAlert("Deleted successfully", "success");
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    location.reload();
+  } else {
+    return;
+  }
+};
+
 allDeleteBtns.forEach((btn) =>
-  btn.addEventListener("click", async function () {
-    const endpoint = this.dataset.endpoint;
-    if (await showConfirmDialog("You are about to delete this product")) {
-      toggleLoader("show");
-      await apiRequest("DELETE", endpoint);
-      showAlert("Deleted successfully", "success");
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      location.reload();
-    } else {
-      return;
-    }
-  })
+  btn.addEventListener("click", handleDeleteClick)
 );
 
 selectCategory.addEventListener("input", async function () {
@@ -76,4 +78,7 @@ selectCategory.addEventListener("input", async function () {
     allRows += row;
   });
   tableBody.innerHTML = allRows;
+  document
+    .querySelectorAll(".delete-doc")
+    .forEach((btn) => btn.addEventListener("click", handleDeleteClick));
 });

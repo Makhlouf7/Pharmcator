@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const validator = require("validator");
 const crypto = require("crypto");
 const bcrypt = require("bcryptjs");
+const Review = require("./reviewModel");
 
 const userSchema = new mongoose.Schema({
   fullName: {
@@ -15,8 +16,10 @@ const userSchema = new mongoose.Schema({
     lowercase: true,
     validate: [validator.isEmail, "Please provide a valid email"],
   },
-  photo: {
+  image: {
     type: String,
+    required: [true, "Please provide your photo"],
+    default: "/images/user-default.jpg",
   },
   address: {
     type: String,
@@ -79,6 +82,12 @@ userSchema.pre("save", async function (next) {
 
 userSchema.pre(/^find/, function (next) {
   this.find({ active: true });
+  next();
+});
+
+userSchema.pre("findOneAndDelete", async function (next) {
+  const userId = this.getQuery()._id;
+  await Review.deleteMany({ user: userId });
   next();
 });
 

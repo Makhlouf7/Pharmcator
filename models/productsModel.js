@@ -1,5 +1,5 @@
 const Category = require("./categoriesModel");
-
+const Review = require("./reviewModel");
 const mongoose = require("mongoose");
 const productsSchema = new mongoose.Schema({
   category: {
@@ -15,6 +15,7 @@ const productsSchema = new mongoose.Schema({
   name: {
     type: String,
     trim: true,
+    unique: true,
     required: [true, "Please provide product name"],
   },
   description: {
@@ -28,17 +29,21 @@ const productsSchema = new mongoose.Schema({
     required: [true, "Please provide button text"],
   },
   stock: {
-    type: String,
+    type: Number,
     trim: true,
     required: [true, "Please provide the quantity of the product"],
   },
   ratingsAvg: {
     type: Number,
-    default: 4.6,
+    default: null,
   },
   ratingsQuantity: {
     type: Number,
     default: 0,
+  },
+  price: {
+    type: Number,
+    required: [true, "Please provide product price"],
   },
   createdAt: {
     type: Date,
@@ -47,6 +52,11 @@ const productsSchema = new mongoose.Schema({
 });
 
 // Queries Middlewares
+productsSchema.pre("findOneAndDelete", async function (next) {
+  const productId = this.getQuery()._id;
+  await Review.deleteMany({ product: productId });
+});
+
 productsSchema.post("save", async function (doc) {
   const categoryId = doc.category;
   await Category.findByIdAndUpdate(categoryId, {
@@ -54,7 +64,7 @@ productsSchema.post("save", async function (doc) {
   });
 });
 
-productsSchema.post("remove", async function (doc) {
+productsSchema.post("findOneAndDelete", async function (doc) {
   const categoryId = doc.category;
   await Category.findByIdAndUpdate(categoryId, {
     $inc: { noOfProducts: -1 },

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PHARMCATOR | <%= category.name %></title>
+    <!-- Style -->
+    <link rel="stylesheet" href="/index.css" />
+    <link rel="icon shortcut" href="/images/favicon.png" type="image/png" />
+    <link rel="stylesheet" href="/css/shared.css" />
+    <link rel="stylesheet" href="/css/products.css" />
+  </head>
+  <body>
+    <%- include("_header") %>
+    <main>
+      <!-- Hero Section -->
+      <div class="hero-section">
+        <div class="hero-container">
+          <img src="<%= category.image %>" alt="" class="hero-image" />
+        </div>
+      </div>
+
+      <div class="text-center mt-5">
+        <h2 class="mb-3" style="color: var(--primary-color)">
+          <%= category.name %>
+        </h2>
+        <p class="fs-5 px-5"><%= category.description %></p>
+      </div>
+
+      <!-- Products Section -->
+      <section id="products">
+        <div class="products section">
+          <ul class="products-container">
+            <% for(product of products){ %>
+            <li class="product-item">
+              <div class="product-image-container">
+                <img
+                  class="product-image"
+                  loading="lazy"
+                  src="<%= product.image %>"
+                  alt="<%= product.name %>"
+                />
+              </div>
+              <h3 class="product-title"><%= product.name %></h3>
+              <div class="product-content">
+                <div class="product-content-text">
+                  <h3 class="product-content-title mb-3">
+                    <%= product.name %>
+                  </h3>
+                  <p class="product-content-p"><%= product.description %></p>
+                </div>
+                <a
+                  class="product-details-btn"
+                  href="/product/<%= product._id %>"
+                  ><%= product.btnText %></a
+                >
+              </div>
+            </li>
+            <% } %>
+          </ul>
+        </div>
+      </section>
+    </main>
+    <%- include("_footer.ejs") %>
+    <script src="/index.js"></script>
+  </body>
+</html>

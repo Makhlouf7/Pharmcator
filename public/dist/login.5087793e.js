@@ -129,30 +129,20 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
 var formEl = document.querySelector("form");
 var login = /*#__PURE__*/function () {
   var _ref = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee(data) {
-    var res;
+    var params;
     return _regeneratorRuntime().wrap(function _callee$(_context) {
       while (1) switch (_context.prev = _context.next) {
         case 0:
-          _context.prev = 0;
-          _context.next = 3;
+          _context.next = 2;
           return (0, _apiRequest.apiRequest)("POST", "api/v1/users/login", data);
-        case 3:
-          res = _context.sent;
-          if (res.data.status == "success") {
-            console.log("You have logged in successfully");
-            window.location = "/";
-          }
-          _context.next = 10;
-          break;
-        case 7:
-          _context.prev = 7;
-          _context.t0 = _context["catch"](0);
-          console.log(_context.t0);
-        case 10:
+        case 2:
+          params = new URLSearchParams(window.location.search);
+          window.location = params.get("redirect") || "/";
+        case 4:
         case "end":
           return _context.stop();
       }
-    }, _callee, null, [[0, 7]]);
+    }, _callee);
   }));
   return function login(_x) {
     return _ref.apply(this, arguments);

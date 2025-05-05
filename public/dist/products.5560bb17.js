@@ -129,8 +129,8 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
 var allDeleteBtns = document.querySelectorAll(".delete-doc");
 var selectCategory = document.querySelector("#select-category");
 var tableBody = document.querySelector("tbody");
-allDeleteBtns.forEach(function (btn) {
-  return btn.addEventListener("click", /*#__PURE__*/_asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+var handleDeleteClick = /*#__PURE__*/function () {
+  var _ref = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
     var endpoint;
     return _regeneratorRuntime().wrap(function _callee$(_context) {
       while (1) switch (_context.prev = _context.next) {
@@ -163,7 +163,13 @@ allDeleteBtns.forEach(function (btn) {
           return _context.stop();
       }
     }, _callee, this);
-  })));
+  }));
+  return function handleDeleteClick() {
+    return _ref.apply(this, arguments);
+  };
+}();
+allDeleteBtns.forEach(function (btn) {
+  return btn.addEventListener("click", handleDeleteClick);
 });
 selectCategory.addEventListener("input", /*#__PURE__*/_asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
   var id, res, products, allRows;
@@ -185,7 +191,10 @@ selectCategory.addEventListener("input", /*#__PURE__*/_asyncToGenerator(/*#__PUR
           allRows += row;
         });
         tableBody.innerHTML = allRows;
-      case 11:
+        document.querySelectorAll(".delete-doc").forEach(function (btn) {
+          return btn.addEventListener("click", handleDeleteClick);
+        });
+      case 12:
       case "end":
         return _context2.stop();
     }

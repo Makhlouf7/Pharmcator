@@ -15,7 +15,7 @@ router.post("/signUp", signUp);
 router.post("/login", login);
 router.post("/logout", logoutUserCookie);
 router.post("/forgotPassword", forgotPassword);
-router.route("/resetPassword/:token").get(renderResetForm).patch(resetPassword);
+router.route("/resetPassword/:token").patch(resetPassword);
 
 router.use(protect);
 // Protected routes requires authentication

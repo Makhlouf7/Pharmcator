@@ -7,6 +7,7 @@ const {
   createProduct,
   deleteProduct,
   updateProduct,
+  getProductsStats,
 } = require("../controllers/productsController");
 
 router
@@ -17,6 +18,7 @@ router
     compressResizeImage({ width: 500, height: 500, quality: 80 }),
     createProduct
   );
+router.get("/stats", getProductsStats);
 router
   .route("/:id")
   .patch(

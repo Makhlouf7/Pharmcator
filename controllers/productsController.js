@@ -1,5 +1,6 @@
 const Product = require("../models/productsModel");
 const Category = require("../models/categoriesModel");
+const Review = require("../models/reviewModel");
 const catchAsync = require("../utils/catchAsync");
 const { deleteOne, getAll } = require("../controllers/handlerFactory");
 const AppError = require("../utils/appError");
@@ -18,7 +19,18 @@ const createProduct = catchAsync(async (req, res, next) => {
   });
 });
 
-const getAllProducts = getAll(Product);
+const getAllProducts = catchAsync(async (req, res, next) => {
+  const products = await Product.find().populate({
+    path: "category",
+    select: "name",
+  });
+
+  res.status(200).json({
+    status: "success",
+    results: products.length,
+    data: products,
+  });
+});
 
 const deleteProduct = catchAsync(async (req, res, next) => {
   const { id } = req.params;
@@ -54,9 +66,22 @@ const updateProduct = catchAsync(async (req, res, next) => {
   });
 });
 
+const getProductsStats = catchAsync(async (req, res, next) => {
+  const lowStock = await Product.find({ stock: { $lt: 10 } }).populate({
+    path: "category",
+    select: "name",
+  });
+  res.status(200).json({
+    status: "success",
+    results: lowStock.length,
+    data: lowStock,
+  });
+});
+
 module.exports = {
   getAllProducts,
   updateProduct,
   deleteProduct,
   createProduct,
+  getProductsStats,
 };

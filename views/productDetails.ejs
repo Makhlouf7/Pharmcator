@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  data-page="productDetails"
+  data-user="<%= locals.user ? true : false %>"
+  data-product="<%= product._id %>"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PHARMCATOR | <%= product.name %></title>
+    <!-- Style -->
+    <link rel="stylesheet" href="/index.css" />
+    <link rel="icon shortcut" href="/images/favicon.png" type="image/png" />
+    <link rel="stylesheet" href="/css/shared.css" />
+    <link rel="stylesheet" href="/css/productDetails.css" />
+  </head>
+  <body>
+    <%- include("_header") %>
+    <!-- Product details section -->
+    <main>
+      <section id="productDetails">
+        <div class="product-details">
+          <div class="product-details-container">
+            <h2 class="product-title"><%= product.name %></h2>
+            <p
+              class="product-rating d-flex gap-3 align-items-center justify-content-center"
+            >
+              <span class="stars pb-1">
+                <% for(let i = 0; i < product.ratingsAvg; i++) {%>
+                <img src="/svgs/star.svg" alt="" />
+                <% } %>
+              </span>
+              <span class="rating-info">
+                <%= product.ratingsAvg %> ( <%= product.ratingsQuantity %> )
+              </span>
+            </p>
+            <p class="fs-5 mb-2">
+              Price <span class="text-secondary">$50.00</span>
+            </p>
+            <p class="product-description w-50 mx-auto fs-5">
+              <%= product.description %>
+            </p>
+          </div>
+          <div class="product-image-container">
+            <img
+              class="product-image"
+              src="<%= product.image %>"
+              alt="View product"
+              draggable="false"
+            />
+          </div>
+          <div class="btns-container d-flex gap-2">
+            <button
+              id="add-to-cart"
+              data-id="<%= product._id %>"
+              class="btn btn-success py-2 px-5 d-flex gap-2 align-items-center"
+            >
+              <img src="/svgs/add.svg" alt="" />
+              <span>Add To Cart</span>
+            </button>
+            <button
+              class="btn btn-success py-2 px-5 d-flex gap-2 align-items-center"
+            >
+              <img src="/svgs/share.svg" alt="" />
+              <span>Share Product</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section id="productReviews">
+        <div class="container-fluid shadow-lg">
+          <div class="container px-4 py-4 reviews-container">
+            <p class="fs-2 primary-color mb-3">Reviews</p>
+            <p class="fs-6 mb-3 fw-bold">Overall Rating</p>
+            <div class="rating-container mb-3 d-flex gap-3 align-items-center">
+              <p class="rateAvg fs-1 primary-color">
+                <%= product.ratingsAvg %>
+              </p>
+              <div class="rate-stars d-flex flex-column">
+                <span class="stars">
+                  <% for(let i = 0; i < product.ratingsAvg; i++) {%>
+                  <img src="/svgs/star.svg" alt="star" />
+                  <% } %>
+                </span>
+                <p class="fs-6"><%= product.ratingsQuantity %> Reviews</p>
+              </div>
+            </div>
+            <p class="fs-6 fw-bold mb-3">Review this product</p>
+            <div class="mb-4">
+              <div class="select-rating-container mb-1 d-flex">
+                <% for(i = 0; i < 5; i++){ %>
+                <div class="px-1 star-container">
+                  <button class="star-btn rounded-1">
+                    <svg
+                      aria-hidden="true"
+                      width="24px"
+                      height="24px"
+                      fill="none"
+                      viewBox="0 0 34 34"
+                      version="1.1"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <g
+                        stroke="none"
+                        stroke-width="1"
+                        fill="none"
+                        fill-rule="evenodd"
+                      >
+                        <g
+                          transform="translate(-588.000000, -409.000000)"
+                          fill="#FFFFFF"
+                          fill-rule="nonzero"
+                          stroke="#FECC00"
+                          stroke-width="1.5"
+                        >
+                          <g transform="translate(337.000000, 399.000000)">
+                            <g transform="translate(241.000000, 0.000000)">
+                              <g transform="translate(10.192308, 10.192308)">
+                                <path
+                                  d="M16.3076923,1.76513255 L20.8381599,11.4172719 L31.0592597,12.978917 L23.6603835,20.5621906 L25.3975353,31.2117909 L16.3076923,26.1870493 L7.21784935,31.2117909 L8.95500108,20.5621906 L1.55612493,12.978917 L11.7772247,11.4172719 L16.3076923,1.76513255 Z"
+                                ></path>
+                              </g>
+                            </g>
+                          </g>
+                        </g>
+                      </g>
+                    </svg>
+                  </button>
+                </div>
+                <% } %>
+              </div>
+              <small id="select-rate" class="text-danger d-block hidden">
+                Please select a rate
+              </small>
+            </div>
+            <div class="write-review d-flex gap-3">
+              <textarea
+                id="review-text"
+                minlength="30"
+                class="col-12 col-md-10 rounded-1 p-3 text-secondary text-area"
+                placeholder="Write a review that at least 30 characters"
+              ></textarea>
+              <button
+                id="submit-rate"
+                class="review-submit btn btn-success col-12 col-md-2"
+              >
+                Submit
+              </button>
+            </div>
+          </div>
+          <hr />
+          <div class="container pb-5">
+            <% for(const review of reviews){ %>
+            <div class="user-review mb-3">
+              <div class="user-info d-flex align-items-center gap-3 mb-3">
+                <img class="user-image" src="<%= review.user.image %>" alt="" />
+                <p class="fs-5 fw-bold">
+                  <% const name = review.user.fullName.split(" ") %> <%=
+                  `${name[0]} ${name[1]}` %>
+                </p>
+              </div>
+              <p class="mb-1 fs-6">
+                <%= review.createdAt.toLocaleString("en-gb", { "year":
+                "numeric", "day": "2-digit", "month": "long" }) %>
+              </p>
+              <div class="star mb-3">
+                <% for(let i = 0; i < review.rating; i++) {%>
+                <img src="/svgs/star.svg" alt="" />
+                <% } %>
+              </div>
+              <p class="fs-6"><%= review.review %></p>
+            </div>
+            <% } %>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <%- include("_footer") %>
+
+    <script src="/index.js"></script>
+  </body>
+</html>

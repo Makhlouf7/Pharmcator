@@ -1,16 +1,15 @@
 const mongoose = require("mongoose");
-const Tour = require("../models/tourModel");
 const reviewSchema = new mongoose.Schema(
   {
     user: {
       type: mongoose.Schema.ObjectId,
       ref: "User",
-      required: [true, "Review must belong to a tour"],
+      required: [true, "Review must belong to a user"],
     },
     product: {
       type: mongoose.Schema.ObjectId,
       ref: "Product",
-      required: [true, "Review must belong to a tour"],
+      required: [true, "Review must belong to a product"],
     },
     review: {
       type: String,
@@ -38,7 +37,7 @@ const reviewSchema = new mongoose.Schema(
 reviewSchema.index({ product: 1, user: 1 }, { unique: true });
 // Static methods =====
 
-// Calculating ratings average and how many reviews for the passed tour
+// Calculating ratings average and how many reviews for the passed product
 reviewSchema.statics.calcAvgReviewRating = async function (productId) {
   const stats = await this.aggregate([
     {
@@ -46,38 +45,30 @@ reviewSchema.statics.calcAvgReviewRating = async function (productId) {
     },
     {
       $group: {
-        _id: "$tour",
+        _id: "$product",
         nRatings: { $sum: 1 },
         avgRatings: { $avg: "$rating" },
       },
     },
   ]);
-
-  // Update the passed tour with calculated number of ratings and average
-  await Tour.findByIdAndUpdate(productId, {
+  // Avoid circular dependency
+  const Product = require("./productsModel");
+  // Update the passed product with calculated number of ratings and average
+  await Product.findByIdAndUpdate(productId, {
     ratingsQuantity: stats.length > 0 ? stats[0].nRatings : 0,
-    ratingsAverage: stats.length > 0 ? stats[0].avgRatings : 0,
+    ratingsAvg: stats.length > 0 ? stats[0].avgRatings : 0,
   });
 };
 
 // Documents Middlewares =====
 reviewSchema.post("save", async function () {
-  this.constructor.calcAvgReviewRating(this.tour);
+  this.constructor.calcAvgReviewRating(this.product);
 });
 
 // Queries Middlewares =====
 reviewSchema.post(/^findOneAnd/, async function (doc) {
   // doc will be null if no document was found
-  if (doc) await doc.constructor.calcAvgReviewRating(doc.tour);
-});
-
-reviewSchema.pre(/^find/, function (next) {
-  this.populate({
-    path: "user",
-    select: "name photo",
-  });
-
-  next();
+  if (doc) await doc.constructor.calcAvgReviewRating(doc.product);
 });
 
 const Review = mongoose.model("Review", reviewSchema);

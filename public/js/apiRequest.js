@@ -1,5 +1,5 @@
 import axios from "axios";
-import { showAlert } from "./alerts";
+import { showAlert, toggleLoader } from "./alerts";
 const serverUrl = "http://127.0.0.1:8000";
 
 export const apiRequest = async function (method, url, data = null) {
@@ -11,8 +11,11 @@ export const apiRequest = async function (method, url, data = null) {
     });
     return res;
   } catch (err) {
-    console.log("API Request error 💥💥", err);
-    showAlert("Oops something went wrong", "error");
+    // Go here if server responded out of 2xx
+    const errorMessage =
+      err.response?.data?.message || "Oops something went wrong";
+    toggleLoader("hide");
+    await showAlert(errorMessage, "error", 4000);
     return "Error";
   }
 };

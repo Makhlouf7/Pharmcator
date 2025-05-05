@@ -1,22 +1,86 @@
 <!DOCTYPE html>
-<html lang="en" data-page="Dashboard/index">
+<html lang="en" data-page="dashboard/index">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      rel="shortcut icon"
-      href="../../images/favicon.png"
-      type="image/png"
-    />
-    <link rel="stylesheet" href="../../dist/index.css" />
-    <link rel="stylesheet" href="../../css/dashboard/style.css" />
+    <link rel="shortcut icon" href="/images/favicon.png" type="image/png" />
+    <link rel="stylesheet" href="/index.css" />
+    <link rel="stylesheet" href="/css/dashboard/style.css" />
     <title>PHARMCATOR | Dashboard</title>
   </head>
   <body>
     <%- include("./partials/nav.ejs") %>
     <main>
-      <h1>Hello world and welcome</h1>
+      <h2 class="text-success">Dashboard</h2>
+      <p class="fs-6 mb-5">A quick data overview</p>
+      <div class="stats-container d-flex gap-5 mb-5">
+        <div
+          class="stat-card border-green d-flex flex-column text-center gap-2"
+        >
+          <div class="d-flex align-items-center justify-content-center">
+            <img width="50px" height="50px" src="/svgs/layers.svg" alt="" />
+          </div>
+          <p class="fs-5 fw-bold m-0"><%= categoriesCount %></p>
+          <p class="fs-6 m-0">Categories Available</p>
+          <p
+            class="mt-auto mb-0 px-2 py-1 details-btn details-green"
+            data-id="category"
+            data-endpoint="api/v1/category"
+          >
+            View Details
+          </p>
+        </div>
+
+        <div
+          class="stat-card border-yellow d-flex flex-column text-center gap-2"
+        >
+          <div class="d-flex align-items-center justify-content-center">
+            <img width="50px" height="50px" src="/svgs/star.svg" alt="" />
+          </div>
+          <p class="fs-5 fw-bold m-0"><%= averageRating.toFixed(2) %></p>
+          <p class="fs-6 m-0">Overall Rating</p>
+          <p
+            class="mt-auto mb-0 px-2 py-1 details-btn details-yellow"
+            data-id="rating"
+            data-endpoint="api/v1/product"
+          >
+            View Details
+          </p>
+        </div>
+        <div class="stat-card border-blue d-flex flex-column text-center gap-2">
+          <div class="d-flex align-items-center justify-content-center">
+            <img width="50px" height="50px" src="/svgs/collection.svg" alt="" />
+          </div>
+          <p class="fs-5 fw-bold m-0"><%= productsCount %></p>
+          <p class="fs-6 m-0">Products Available</p>
+          <p
+            class="mt-auto mb-0 px-2 py-1 details-btn details-blue"
+            data-id="products"
+            data-endpoint="api/v1/product"
+          >
+            View Details
+          </p>
+        </div>
+        <div class="stat-card border-red d-flex flex-column text-center gap-2">
+          <div class="d-flex align-items-center justify-content-center">
+            <img width="50px" height="50px" src="/svgs/warning.svg" alt="" />
+          </div>
+          <p class="fs-5 fw-bold m-0"><%= productsShortageCount %></p>
+          <p class="fs-6 m-0">Products Shortage</p>
+          <p
+            class="mt-auto mb-0 px-2 py-1 details-btn details-red"
+            data-id="shortage"
+            data-endpoint="api/v1/product/stats"
+          >
+            View Details
+          </p>
+        </div>
+      </div>
+      <table class="table table-light table-striped table-hover">
+        <thead></thead>
+        <tbody></tbody>
+      </table>
     </main>
-    <script src="../../dist/index.js"></script>
+    <script src="/index.js"></script>
   </body>
 </html>

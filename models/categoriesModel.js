@@ -8,6 +8,7 @@ const categorySchema = new mongoose.Schema({
   },
   name: {
     type: String,
+    unique: true,
     trim: true,
     required: [true, "Please provide category name"],
   },
@@ -31,5 +32,5 @@ const categorySchema = new mongoose.Schema({
   },
 });
 
-const Category = mongoose.model("category", categorySchema);
+const Category = mongoose.model("Category", categorySchema);
 module.exports = Category;

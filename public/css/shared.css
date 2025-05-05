@@ -1,22 +1,51 @@
 /* GENERAL */
 :root {
   --primary-color: #047857;
+  --green-light: #e9f7e9;
+  --green-light-strip: #cde7cd;
+  --green-light-hover: #a0d2a0;
   --white: #ffffff;
   --shadow: #00000014;
   --card-title: #0c1a4b;
   --text: #333;
   --grey: #c7c7c7;
+  --star: #fecc00;
 }
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
+body {
+  background-color: var(--green-bright);
+}
+a {
+  text-decoration: none;
+  color: #000;
+}
+ul {
+  list-style: none;
+}
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0 !important;
+}
 .primary-color {
   color: var(--primary-color);
 }
+.text-area {
+  border: 1px solid var(--primary-color);
+  outline: none;
+  &:focus {
+    box-shadow: 0px 0px 10px var(--primary-color);
+  }
+}
 /* HEADER STYLE */
-
 .navbar-brand {
   color: #047857 !important;
   font-weight: bold;
@@ -49,4 +78,9 @@
 footer {
   padding: 0 35px;
   background: linear-gradient(to left, var(--primary-color), var(--white));
+}
+
+/* Script classes */
+.hidden {
+  display: none !important;
 }
